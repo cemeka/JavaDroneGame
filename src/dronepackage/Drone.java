@@ -6,7 +6,47 @@ public class Drone {
 	  private int speedX = 0;
 	  private int speedY = 1;
 	  
-	  public void update(){
+	  public int getCenterX() {
+		return centerX;
+	}
+
+
+	public void setCenterX(int centerX) {
+		this.centerX = centerX;
+	}
+
+
+	public int getCenterY() {
+		return centerY;
+	}
+
+
+	public void setCenterY(int centerY) {
+		this.centerY = centerY;
+	}
+
+
+	public int getSpeedX() {
+		return speedX;
+	}
+
+
+	public void setSpeedX(int speedX) {
+		this.speedX = speedX;
+	}
+
+
+	public int getSpeedY() {
+		return speedY;
+	}
+
+
+	public void setSpeedY(int speedY) {
+		this.speedY = speedY;
+	}
+
+
+	public void update(){
 		  //Moves character accordingly
 		  if (speedX == 0){
 			System.out.println("Do not scroll to the background");
@@ -35,6 +75,10 @@ public class Drone {
 			}
 
 	  
+	       public void moveLeft() {
+		    speedX = -6;
+	       }
+	       
 			public void moveRight() {
 				speedX = 6;
 			}
