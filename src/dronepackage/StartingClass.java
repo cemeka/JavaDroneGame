@@ -12,14 +12,17 @@ import java.net.URL;
 
 
 import dronepackage.Background;
+import dronepackageframework.Animation;
 
 public class StartingClass extends Applet implements Runnable, KeyListener {
    private Drone drone; 
-   private Image image, character, background, badDroneImage;
+   private Image image, character, background, badDroneImage, badDroneImage2, badDroneImage3, badDroneImage4, badDroneImage5;
    private URL base; //url allows us to use addresses (such as C:\\Users\\Desktop\\image1.jpg)
    private Graphics second;
    private static Background bg1, bg2;
    private BadDrone badDrone1, badDrone2;
+	private Animation  hanim; 
+    //hanim used to animate the baddrones 
    
 	public static Background getBg1() {
 	return bg1;
@@ -52,9 +55,27 @@ public static void setBg2(Background bg2) {
 	   
 	   //Image setups
 	   character = getImage(base, "data/character.png");
-	   background = getImage(base, "data/background.png");
+	   
+	   
 	   badDroneImage = getImage(base, "data/heliboy.png");
-   }
+	   badDroneImage2 = getImage(base, "data/heliboy2.png");
+	   badDroneImage3 = getImage(base, "data/heliboy3.png");
+	   badDroneImage4 = getImage(base, "data/heliboy4.png");
+	   badDroneImage5 = getImage(base, "data/heliboy5.png");
+	   
+	   background = getImage(base, "data/background.png");
+   
+		
+		hanim = new Animation();
+		hanim.addFrame(badDroneImage, 100);
+		hanim.addFrame(badDroneImage2, 100);
+		hanim.addFrame(badDroneImage3, 100);
+		hanim.addFrame(badDroneImage4, 100);
+		hanim.addFrame(badDroneImage5, 100);
+		hanim.addFrame(badDroneImage4, 100);
+		hanim.addFrame(badDroneImage3, 100);
+		hanim.addFrame(badDroneImage2, 100);
+	}
    
    public void start(){
 	   
@@ -95,6 +116,8 @@ public static void setBg2(Background bg2) {
 		  
 		   bg1.update();
 		   bg2.update();
+		  
+		   animate();
 		   repaint();
 		  
 		   try{
@@ -105,6 +128,10 @@ public static void setBg2(Background bg2) {
 		   
 	   }
 		
+	}
+   
+   public void animate(){
+		hanim.update(40);
 	}
    
  //the update method is used for double buffering. 
@@ -140,8 +167,8 @@ public static void setBg2(Background bg2) {
 
 		g.drawImage(character, drone.getCenterX() - 61, drone.getCenterY() - 63, this);
 	  
-		g.drawImage(badDroneImage,  badDrone1.getCenterX() - 48, badDrone2.getCenterY(), this);
-		g.drawImage(badDroneImage,  badDrone2.getCenterX() - 48, badDrone2.getCenterY(), this);
+		g.drawImage(hanim.getImage(),  badDrone1.getCenterX() - 48, badDrone2.getCenterY(), this);
+		g.drawImage(hanim.getImage(),  badDrone2.getCenterX() - 48, badDrone2.getCenterY(), this);
    }
 
 
