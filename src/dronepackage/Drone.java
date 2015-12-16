@@ -1,10 +1,21 @@
 package dronepackage;
 
+import dronepackage.Background;
+import dronepackage.StartingClass;
+
 public class Drone {
+	final int MOVESPEED = 5;
+	  final int GROUND = 382;
+	  
 	  private int centerX = 100;
-	  private int centerY = 180; 
+	  private int centerY = 382; 
+	  private boolean movingLeft = false;
+	  private boolean movingRight = false; 
+	  
 	  private int speedX = 0;
 	  private int speedY = 1;
+	  private static Background bg1 = StartingClass.getBg1();
+	  private static Background bg2 = StartingClass.getBg2();
 	  
 	  public int getCenterX() {
 		return centerX;
@@ -45,27 +56,34 @@ public class Drone {
 		this.speedY = speedY;
 	}
 
-
 	public void update(){
-		  //Moves character accordingly
-		  if (speedX == 0){
-			System.out.println("Do not scroll to the background");
-			
-		  }else {
-			  if (centerX <= 150){
-				  centerX += speedX;
-			  } else {
-				  System.out.println("Scroll background here");
-			  }
+		  //Moves character or scrolls back accordingly
+		  if (speedX < 0){
+			  centerX += speedX;
 		  }
 		  
-		// Updates Y Position
+		  if (speedX < 0) {
+	          centerX += speedX;
+	      }
+	      if (speedX == 0 || speedX < 0) {
+	          bg1.setSpeedX(0);
+	          bg2.setSpeedX(0);
 
-				if (centerY + speedY >= 180) {
-					centerY = 180;
-				}else{                       
-		                     centerY += speedY;
-		        }
+	      }
+	      if (centerX <= 200 && speedX > 0) {
+	          centerX += speedX;
+	      }
+	      if (speedX > 0 && centerX > 200){
+	          bg1.setSpeedX(-MOVESPEED);
+	          bg2.setSpeedX(-MOVESPEED);
+	      }
+		  
+		// Updates Y Position
+	      centerY += speedY;
+		  if (centerY + speedY >= GROUND) {
+			centerY = GROUND;
+		  }
+				// Handles Jumping
 				
 
 				// Prevents going beyond X coordinate of 0
@@ -73,14 +91,14 @@ public class Drone {
 					centerX = 61;
 				}
 			}
-
+	
 	  
 	       public void moveLeft() {
-		    speedX = -6;
+		    speedX = -MOVESPEED;
 	       }
 	       
 			public void moveRight() {
-				speedX = 6;
+				speedX = MOVESPEED;
 			}
 
 			public void moveUp(){
@@ -93,8 +111,43 @@ public class Drone {
 				speedY = +5;
 			}
 
-			public void stop() {
-				speedX = 0;
+			private void stop() {
+		        if (isMovingRight() == false && isMovingLeft() == false) {
+		            speedX = 0;
+		        }
+
+		        if (isMovingRight() == false && isMovingLeft() == true) {
+		            moveLeft();
+		        }
+
+		        if (isMovingRight() == true && isMovingLeft() == false) {
+		            moveRight();
+		        }
+
+		    }
+			public void stopRight(){
+				setMovingRight(false);
+				stop();
 			}
+			public void stopLeft(){
+				setMovingLeft(false);
+				stop();
+			}
+			
+			public boolean isMovingRight() {
+		        return movingRight;
+		    }
+
+		    public void setMovingRight(boolean movingRight) {
+		        this.movingRight = movingRight;
+		    }
+
+		    public boolean isMovingLeft() {
+		        return movingLeft;
+		    }
+
+		    public void setMovingLeft(boolean movingLeft) {
+		        this.movingLeft = movingLeft;
+		    }
 
 		}

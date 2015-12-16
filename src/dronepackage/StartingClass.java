@@ -9,11 +9,31 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
 
+import dronepackage.Background;
+
 public class StartingClass extends Applet implements Runnable, KeyListener {
    private Drone drone; 
-   private Image image, character;
+   private Image image, character, background;
    private URL base; //url allows us to use addresses (such as C:\\Users\\Desktop\\image1.jpg)
    private Graphics second;
+   private static Background bg1, bg2;
+   
+	public static Background getBg1() {
+	return bg1;
+}
+
+public static void setBg1(Background bg1) {
+	StartingClass.bg1 = bg1;
+}
+
+public static Background getBg2() {
+	return bg2;
+}
+
+public static void setBg2(Background bg2) {
+	StartingClass.bg2 = bg2;
+}
+
 	public void init(){
 	   setSize(800, 400);
 	   setBackground(Color.BLACK);
@@ -29,10 +49,13 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
 	   
 	   //Image setups
 	   character = getImage(base, "data/character.png");
+	   background = getImage(base, "data/background.png");
    }
    
    public void start(){
-	   super.start();
+	   
+	   bg1 = new Background(0, 0);
+	   bg2 = new Background(2160, 0);
 	   drone = new Drone();
 	   
 	   Thread thread = new Thread(this);
@@ -40,17 +63,19 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
    }
    
    public void stop(){
-	   super.stop();
+	   
    }
    
    public void destroy(){
-	   super.destroy();
+	
    }
    @Override
 	public void run() {
 		// TODO Auto-generated method stub
 	   while(true){
 		   drone.update();
+		   bg1.update();
+		   bg2.update();
 		   repaint();
 		  
 		   try{
@@ -83,7 +108,9 @@ public class StartingClass extends Applet implements Runnable, KeyListener {
    @Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(character, drone.getCenterX() - 15, drone.getCenterY() - 15, this);
+	    g.drawImage(background, bg1.getBgX(), bg1.getBgY(), this);
+	    g.drawImage(background, bg2.getBgX(), bg2.getBgY(), this);
+		g.drawImage(character, drone.getCenterX() - 61, drone.getCenterY() - 63, this);
 	}
 
 
@@ -129,11 +156,11 @@ public void keyReleased(KeyEvent e) {
         break;
 
     case KeyEvent.VK_LEFT:
-    	drone.stop();
+    	drone.stopLeft();
         break;
 
     case KeyEvent.VK_RIGHT:
-    	drone.stop();
+    	drone.stopRight();
         break;
 
     case KeyEvent.VK_SPACE:
