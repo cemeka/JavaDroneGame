@@ -67,14 +67,14 @@ public static void setBg2(Background bg2) {
    
 		
 		hanim = new Animation();
-		hanim.addFrame(badDroneImage, 100);
-		hanim.addFrame(badDroneImage2, 100);
-		hanim.addFrame(badDroneImage3, 100);
-		hanim.addFrame(badDroneImage4, 100);
-		hanim.addFrame(badDroneImage5, 100);
-		hanim.addFrame(badDroneImage4, 100);
-		hanim.addFrame(badDroneImage3, 100);
-		hanim.addFrame(badDroneImage2, 100);
+		hanim.addFrame(badDroneImage, 1000);
+		hanim.addFrame(badDroneImage2, 1000);
+		hanim.addFrame(badDroneImage3, 1000);
+		hanim.addFrame(badDroneImage4, 1000);
+		hanim.addFrame(badDroneImage5, 1000);
+		hanim.addFrame(badDroneImage4, 1000);
+		hanim.addFrame(badDroneImage3, 1000);
+		hanim.addFrame(badDroneImage2, 1000);
 	}
    
    public void start(){
