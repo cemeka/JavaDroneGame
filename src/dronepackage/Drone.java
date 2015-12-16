@@ -1,5 +1,6 @@
 package dronepackage;
 
+import java.util.ArrayList;
 import dronepackage.Background;
 import dronepackage.StartingClass;
 
@@ -16,7 +17,8 @@ public class Drone {
 	  private int speedY = 1;
 	  private static Background bg1 = StartingClass.getBg1();
 	  private static Background bg2 = StartingClass.getBg2();
-	  
+	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>(5);
+		
 	  public int getCenterX() {
 		return centerX;
 	}
@@ -92,7 +94,14 @@ public class Drone {
 				}
 			}
 	
-	  
+	public ArrayList getProjectiles(){
+		return projectiles; 
+	}
+	public void shoot(){
+		Projectile p = new Projectile(centerX + 50, centerY - 25);
+		projectiles.add(p);
+	}
+	
 	       public void moveLeft() {
 		    speedX = -MOVESPEED;
 	       }
